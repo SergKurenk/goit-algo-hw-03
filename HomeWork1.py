@@ -6,10 +6,10 @@ def get_days_from_today(date):
         stripped_date = datetime.strptime(date, "%Y-%m-%d")
         return (datetime.today() - stripped_date).days
     except:
-        return 0
+        return None
 
 def get_numbers_ticket(min, max, quantity):
-    if (min >= max) or (quantity >= max-min):
+    if (min >= max) or (quantity > max-min) or (0 >= min) or (min >= 1000) or (0 >= max) or (max >= 1000) or (quantity <= 0):
         return ""
     
     out_numbers = {random.randint(min,max)}
@@ -39,6 +39,12 @@ p_numbers = [
     "38050 111 22 11   ",
 ]
 
-print("Нормалізовані номери телефонів для SMS-розсилки:", [normalize_phone(x) for x in p_numbers])
 print (get_days_from_today("2025_12-25"))
-print(get_numbers_ticket(1, 100, quantity=10))
+
+# (10, 20, 5), (10, 15, 5), (980, 999, 11) correct
+# - (10, 4, 5), (10, 14, 6), (-10, 10, 5), (1000, 1200, 3) uncorrect
+
+print(get_numbers_ticket(980, 999, 11))
+print("Нормалізовані номери телефонів для SMS-розсилки:", [normalize_phone(x) for x in p_numbers])
+ 
+ 
